@@ -1,6 +1,6 @@
 # filecrypto4s
 # What?
-Just a Scala library to enable encrypt/decrypt various files and also fields of structured files.
+Just a Scala library to encrypt/decrypt various files and also fields of structured files.
 # How?
 val excelRepo=new ExcelRepo(inputFilePath)
 
