@@ -20,7 +20,7 @@ object FileCrypto  extends LazyLogging{
         val excelRepo=new ExcelRepo(inputFilePath)
         excelRepo.encryptAndExport(sheetIdx,columnIndices,key,outputFilePath)
       case _=>
-        logger.error("input arguments are bad! please try again with correct format of arguments.")
+        logger.error("input arguments' format is not correct! please use the appropriate format of arguments.")
     }
 
   }

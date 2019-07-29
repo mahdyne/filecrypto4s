@@ -4,8 +4,9 @@ import java.io.File
 import java.io.{File, FileOutputStream}
 
 import com.snapptrip.crypto.crypto.Crypto
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.poi.ss.usermodel._
-class ExcelRepo(inputFilePath:String) {
+class ExcelRepo(inputFilePath:String) extends LazyLogging{
   import collection.JavaConverters._
   def getWorkbook: Workbook ={
     val inputFile=new File(inputFilePath)
@@ -26,24 +27,20 @@ class ExcelRepo(inputFilePath:String) {
               case CellType.NUMERIC=>
                 val intValue = sensitiveCell.getNumericCellValue
                 val encryptedValue = Crypto.encrypt(key, intValue.toString)
-                println(s"$intValue -~> $encryptedValue")
                 Some(encryptedValue)
               case CellType.STRING=>
                 val strValue=sensitiveCell.getStringCellValue
                 val encryptedValue = Crypto.encrypt(key, strValue)
-                println(s"$strValue -~> $encryptedValue")
                 Some(encryptedValue)
               case CellType.BOOLEAN =>
                 val booleanValue=sensitiveCell.getBooleanCellValue
                 val encryptedValue = Crypto.encrypt(key, booleanValue.toString)
-                println(s"$booleanValue -~> $encryptedValue")
                 Some(encryptedValue)
               case CellType.BLANK=>
                 None
               case _ =>
                 val strValue=sensitiveCell.getStringCellValue
                 val encryptedValue = Crypto.encrypt(key, strValue)
-                println(s"$strValue -~> $encryptedValue")
                 Some(encryptedValue)
             }
             sensitiveCell.setCellValue(encryptedValue.getOrElse(""))
