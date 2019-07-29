@@ -32,7 +32,7 @@ class ExcelRepo(inputFilePath:String) extends LazyLogging{
                 val strValue=sensitiveCell.getStringCellValue
                 val encryptedValue = Crypto.encrypt(key, strValue)
                 Some(encryptedValue)
-              case CellType.BOOLEAN =>
+              case CellType.BOOLEAN=>
                 val booleanValue=sensitiveCell.getBooleanCellValue
                 val encryptedValue = Crypto.encrypt(key, booleanValue.toString)
                 Some(encryptedValue)
@@ -44,8 +44,6 @@ class ExcelRepo(inputFilePath:String) extends LazyLogging{
                 Some(encryptedValue)
             }
             sensitiveCell.setCellValue(encryptedValue.getOrElse(""))
-          case _ =>
-            None
         }
       }
     }
