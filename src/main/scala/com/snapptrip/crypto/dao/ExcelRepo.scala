@@ -43,11 +43,16 @@ class ExcelRepo(inputFilePath:String) extends LazyLogging{
                 val encryptedValue = Crypto.encrypt(key, strValue)
                 Some(encryptedValue)
             }
-            sensitiveCell.setCellValue(encryptedValue.getOrElse(""))
+            sensitiveCell.setCellValue(addSingleQuote(encryptedValue.getOrElse("")))
         }
       }
     }
   }
+
+  def addSingleQuote(str:String)={
+    if(str.startsWith("=")) s"""'$str""" else str
+  }
+
   def overwrite(filePath:String,workbook:Workbook)={
     val out=new FileOutputStream(filePath)
     workbook.write(out)
@@ -60,5 +65,4 @@ class ExcelRepo(inputFilePath:String) extends LazyLogging{
     workbook.write(out)
     println("Encrypted and exported successfully")
   }
-
 }
