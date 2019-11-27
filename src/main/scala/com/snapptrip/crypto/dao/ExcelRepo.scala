@@ -50,7 +50,7 @@ class ExcelRepo(inputFilePath:String) extends LazyLogging{
   }
 
   def addSingleQuote(str:String)={
-    if(str.startsWith("=")) s"""'$str""" else str
+    if(str.startsWith("=") || str.startsWith("+")) s"""'$str""" else str
   }
 
   def overwrite(filePath:String,workbook:Workbook)={
